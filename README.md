@@ -105,3 +105,5 @@ exact_currency=x
 ...
   
 Each line of the file is a parameter in the search body in a web request. Some of these parameters take either '1' or 'x' as the correct value, which is decided by their web server at poe.trade. I cannot help with these.
+
+TO-DO: Add functionalities for multiple stacked items, like 5 chaos orbs instead of just 1 chaos orb (requires using 'currency market' on poe.trade)
