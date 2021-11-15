@@ -3,11 +3,11 @@ Grabs all listings from poe.trade for a given item and parameters.
 
 Usage:
 
-./ListingGrabber <league> <itemName>
+./ListingGrabber league itemName
   
   -OR-
   
-  ./ListingGrabber <input file>
+  ./ListingGrabber inputFile
   
   
   an Input file has the following structure:
