@@ -22,7 +22,7 @@ namespace DownloadPageHttpClient
 
     class Program
     {
-        public static ListingResult[] ResultList = new ListingResult[1000];
+        public static ListingResult[] ResultList = new ListingResult[1000]; //its highly unlikely we will get 1000+ listings in one result, but modify this as you may
 
         public static string GetSubstring(string l_Source, string l_FindCharacter)
         {
