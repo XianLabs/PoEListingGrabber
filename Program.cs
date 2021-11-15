@@ -22,7 +22,10 @@ namespace ListingGrabber
 
     class Program
     {
-        public static ListingResult[] ResultList = new ListingResult[1000]; //its highly unlikely we will get 1000+ listings in one result, but modify this as you may
+        public static int MAX_BYTES = 1000000;
+        public static int MAX_LISTINGS = 1000;
+
+        public static ListingResult[] ResultList = new ListingResult[MAX_LISTINGS];
 
         public static string GetSubstring(string l_Source, string l_FindCharacter)
         {
@@ -52,11 +55,11 @@ namespace ListingGrabber
             request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
             request.AllowAutoRedirect = true;
 
-            byte[] ouat = new byte[1000000]; //search response will have about 500k - 1M bytes depending on # of listings, increase this to w/e is max if you wish.
-            byte[] searchResult = new byte[1000000];
+            byte[] ouat = new byte[MAX_BYTES];
+            byte[] searchResult = new byte[MAX_BYTES];
 
             WebResponse r = request.GetResponse();
-            int result1 = r.GetResponseStream().Read(ouat, 0, 1000000);
+            int result1 = r.GetResponseStream().Read(ouat, 0, MAX_BYTES);
 
             // From byte array to string
             string s = System.Text.Encoding.UTF8.GetString(ouat, 0, ouat.Length);
@@ -77,9 +80,9 @@ namespace ListingGrabber
             newStream.Write (byte1, 0, byte1.Length);
 
             WebResponse response = (HttpWebResponse)request2.GetResponse();
-            int result2 = response.GetResponseStream().Read(searchResult, 0, 1000000);
+            int result2 = response.GetResponseStream().Read(searchResult, 0, MAX_BYTES);
 
-            s = System.Text.Encoding.UTF8.GetString(searchResult, 0, 1000000);
+            s = System.Text.Encoding.UTF8.GetString(searchResult, 0, MAX_BYTES);
 
             int i = 0;
 
@@ -210,7 +213,7 @@ namespace ListingGrabber
 
         static void Main(string[] args)
         {
-            Console.OutputEncoding = System.Text.Encoding.UTF8; //you must install language packs for console if you want non-ENG names to display properly. writing to file works fine.
+            Console.OutputEncoding = System.Text.Encoding.UTF8;
 
             if(args.Length == 2)
             {
@@ -223,7 +226,8 @@ namespace ListingGrabber
             else
             {
                 Console.WriteLine("Usage (command line): ./ListingGrabber <server> <itemName>");
-                Console.WriteLine("Usage (input file): ./ListingGrabber <fileName>");
+                Console.WriteLine("Usage (input file): ./ListingGrabber fileName");
+                Console.ReadLine();
             }
         }
     }
