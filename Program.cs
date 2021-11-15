@@ -6,7 +6,7 @@ using System.Net.Security;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DownloadPageHttpClient
+namespace ListingGrabber
 {
     class ListingResult
     {
@@ -52,7 +52,7 @@ namespace DownloadPageHttpClient
             request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
             request.AllowAutoRedirect = true;
 
-            byte[] ouat = new byte[1000000];
+            byte[] ouat = new byte[1000000]; //search response will have about 500k - 1M bytes depending on # of listings, increase this to w/e is max if you wish.
             byte[] searchResult = new byte[1000000];
 
             WebResponse r = request.GetResponse();
