@@ -10,7 +10,7 @@ namespace ListingGrabber
 {
     class ListingResult
     {
-        public string Buyout; //data-buyout
+        public string Buyout; //data-buyout label on site
         public string CharacterName; //data-ign
         public string League; //data-league
         public string ItemName; //data-name
@@ -41,7 +41,7 @@ namespace ListingGrabber
                 await file.WriteLineAsync(text);
         }
 
-        public static async void GetItemListings(string server, string itemName, int itemQuantity, string parameters) //all done in 4hours
+        public static async void GetItemListings(string server, string itemName, int itemQuantity, string parameters)
         {
             ServicePointManager.ServerCertificateValidationCallback = new
             RemoteCertificateValidationCallback //SSL hack
@@ -135,7 +135,7 @@ namespace ListingGrabber
                 readIndex = index_Y + "data-y".Length + 2;
                 endIndex = s.IndexOf("\"", readIndex); 
                 string Y = s.Substring(readIndex, endIndex - readIndex);
-                result.CellY = Convert.ToInt32(Y);
+                result.CellY = Convert.ToInt32(Y); //too lazy to wrap this in try catch blocks, screw your input errors!
 
                 string Whisper = CreateWhisper(cost, IGN, league, ItemName, TabName, result.CellX, result.CellY);
                 Console.WriteLine("Listing {0}: Price {1}, IGN: {2} for {3}, in Stash Tab {4} slots X: {5}, Y: {6}", i, cost, IGN, ItemName, TabName, X, Y);
@@ -165,7 +165,7 @@ namespace ListingGrabber
 
         }
 
-        static void ReadFileAndGetListings(string fileName)
+        static void ReadFileAndGetListings(string fileName) //reads an input for for use as parameters for search
         {
             string itemName = string.Empty;
             string server = string.Empty;
@@ -174,7 +174,6 @@ namespace ListingGrabber
             string[] lines = System.IO.File.ReadAllLines(@fileName);
             int counter = 0;
 
-            // Display the file contents by using a foreach loop.
             foreach (string line in lines)
             {
                 if(counter == 0)
@@ -199,7 +198,7 @@ namespace ListingGrabber
             GetItemListings(server, itemName, 1, parameters);
         }
 
-        static string CreateWhisper(string Buyout, string CharacterName, string League, string ItemName, string StashTabName, int CellX, int CellY)
+        static string CreateWhisper(string Buyout, string CharacterName, string League, string ItemName, string StashTabName, int CellX, int CellY) 
         {
             string Whisper = "@" + CharacterName + " ";
             Whisper += "Hi, I would like to buy your " + ItemName + " ";
